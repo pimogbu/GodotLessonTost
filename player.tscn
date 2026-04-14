@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://btw1kjxgp23oe"]
+
+[ext_resource type="Script" uid="uid://bi3ax6ia6lc5x" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sh265"]
+size = Vector3(1, 2.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
+size = Vector3(1, 2.5, 1)
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1086394399]
+script = ExtResource("1_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=773688047]
+mesh = SubResource("BoxMesh_sh265")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1733961588]
+shape = SubResource("BoxShape3D_4flbx")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=122245226]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=716980257]
