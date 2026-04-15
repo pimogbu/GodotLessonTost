@@ -17,6 +17,11 @@ glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_rj4so"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_jq6gy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o3cl4"]
+size = Vector3(3.856079, 2.6953125, 2.416748)
+
 [node name="Node3D" type="Node3D" unique_id=575506913]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1983588981]
@@ -35,5 +40,20 @@ size = Vector3(30.555, 0.001, 22.01)
 transform = Transform3D(1, 0, 0, 0, 1.0028809, 0.008211054, 0, -0.0070890654, 1.1616071, 0, 2, 1.2353145)
 mesh = SubResource("BoxMesh_rj4so")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=305163078]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=915631632]
+shape = SubResource("BoxShape3D_jq6gy")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=1279918997]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=1754912178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13555908, 0.15527403, -0.016479611)
+shape = SubResource("BoxShape3D_o3cl4")
+
 [node name="CharacterBody3D" parent="." unique_id=1086394399 instance=ExtResource("1_jq6gy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.711487, 2.3619585, 2)
+
+[connection signal="body_entered" from="MeshInstance3D/Area3D" to="CharacterBody3D" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="MeshInstance3D/Area3D" to="CharacterBody3D" method="_on_area_3d_body_exited"]
+[connection signal="mouse_entered" from="MeshInstance3D/Area3D" to="CharacterBody3D" method="_on_area_3d_mouse_entered"]
