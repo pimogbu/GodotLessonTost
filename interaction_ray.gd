@@ -1,6 +1,0 @@
-extends RayCast3D
-
-func _process(delta: float) -> void:
-	if is_colliding():
-		var collider = get_collider()
-		collider.queue_free()

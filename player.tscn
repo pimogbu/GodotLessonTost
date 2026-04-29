@@ -1,29 +1,56 @@
-[gd_scene format=3 uid="uid://btw1kjxgp23oe"]
+[gd_scene format=3 uid="uid://ckudr8chj1kgo"]
 
-[ext_resource type="Script" uid="uid://bi3ax6ia6lc5x" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://rrkarcdvl8rm" path="res://interaction_ray.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://drlldp7l6q0o4" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://b8p13dwyuigxe" path="res://interaction.gd" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://c0laxl5ekx3sl" path="res://rifle0_mat.glb" id="3_i3pqv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_sh265"]
-size = Vector3(1, 2.5, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_4flbx"]
-size = Vector3(1, 2.5, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_sh265"]
+size = Vector3(1, 2.41, 1)
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1086394399]
+[node name="player" type="CharacterBody3D" unique_id=226575813]
 script = ExtResource("1_4flbx")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=773688047]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=809658181]
+transform = Transform3D(1, 0, 0, 0, 2.406, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_sh265")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1733961588]
-shape = SubResource("BoxShape3D_4flbx")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2040031214]
+shape = SubResource("BoxShape3D_sh265")
 
-[node name="CameraPivot" type="Node3D" parent="." unique_id=122245226]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.832616, 0)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=521817869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6273222, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=716980257]
-transform = Transform3D(1, 0, 0, 0, 0.9986295, -0.05233596, 0, 0.05233596, 0.9986295, 0, 0, 0)
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1410827178]
 
-[node name="InteractionRay" type="RayCast3D" parent="CameraPivot" unique_id=466310700]
-transform = Transform3D(1, 0, 0, 0, -2.8224358e-07, -0.9999997, 0, 6.45698, -4.3711374e-08, 0, 0, -0.8438362)
+[node name="rifle0_mat" parent="CameraPivot/Camera3D" unique_id=616085953 instance=ExtResource("3_i3pqv")]
+transform = Transform3D(-4.3711385e-08, 0.99999994, -4.3711385e-08, 0, -4.3711385e-08, -0.9999999, -0.99999994, -4.3711385e-08, 1.9106853e-15, 0.35140437, -0.32822812, -1.0146239)
+
+[node name="InteractionRay" type="RayCast3D" parent="CameraPivot" unique_id=721459025]
+transform = Transform3D(1, 0, 0, 0, -4.614062e-06, -0.99999964, 0, 105.557434, -4.371137e-08, 0, -0.28045106, -0.9194517)
 script = ExtResource("2_onrkg")
+
+[node name="UserInterface" type="Control" parent="." unique_id=1457442285]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 646.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="UserInterface" unique_id=170186201]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.5
+offset_top = -22.5
+offset_right = 21.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5602517, 1.0332248)
+text = "."

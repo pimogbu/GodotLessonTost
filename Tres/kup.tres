@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c1dju77um8ofh"]
+
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_p4xox"]
+[ext_resource type="Script" uid="uid://1outw4ftigim" path="res://item_data.gd" id="2_4dgst"]
+
+[resource]
+script = ExtResource("2_4dgst")
+name = "kup"
+icon = ExtResource("1_p4xox")
+max_stack = 64
+metadata/_custom_type_script = "uid://1outw4ftigim"

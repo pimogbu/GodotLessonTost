@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var player: CharacterBody3D = $"."
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera3d: Camera3D = $CameraPivot/Camera3D
+@onready var ray: RayCast3D = $CameraPivot/InteractionRay
 
 @export_group("Camera")
 @export var mouse_sensitivity : float = 1
@@ -14,6 +15,12 @@ extends CharacterBody3D
 
 var camera_input_direction : Vector2 = Vector2.ZERO
 
+# Stamina Değişkenleri
+var SPRINT_SPEED : float = 8.0
+var WALK_SPEED : float = 5.0
+var stamina : float = 100.0
+var initial_stamina: float = 100.0 
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -22,10 +29,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_camera_motion:
 		camera_input_direction = event.screen_relative * mouse_sensitivity
 		
-	if event.is_action_pressed("Jump") and player.is_on_floor():
+	if event.is_action_pressed("jump") and player.is_on_floor():
 		player.velocity.y = JUMP_VELOCITY
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("sprint") and stamina > 0:
+		move_speed = SPRINT_SPEED
+		stamina -= 10.0 * delta
+	else:
+		move_speed = WALK_SPEED 
+		stamina += 2.0 * delta
+		stamina = clamp(stamina, 0, initial_stamina)
 	
 	# KAMERA HAREKETLERI
 	camera_pivot.rotation.x -= camera_input_direction.y * delta
@@ -51,18 +65,18 @@ func _physics_process(delta: float) -> void:
 	player.velocity.z = move_toward(player.velocity.z, move_direction.z * move_speed, acceleration * delta)
 	  
 	player.move_and_slide()
-
+	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("six"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
 	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE 
+		
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	print("Alanıma girdin")
-
+	
 func _on_area_3d_body_exited(body: Node3D) -> void:
-	print("Alanımdan çıktın")
+	print("Alanımdan cıktın")
 
 func _on_area_3d_mouse_entered() -> void:
-	print("Beni dürtme")
+	print("beni dürtme")

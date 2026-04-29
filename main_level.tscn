@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bm22x6r7oj4tb"]
+
+[ext_resource type="Script" uid="uid://b0j4bte7usjxu" path="res://kup.gd" id="1_bhu08"]
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://player.tscn" id="1_bw3m6"]
+[ext_resource type="Resource" uid="uid://c1dju77um8ofh" path="res://Tres/kup.tres" id="2_05as6"]
+[ext_resource type="PackedScene" uid="uid://2oqfqxx5b61g" path="res://enemy.tscn" id="4_05as6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bw3m6"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_6614m"]
+sky_material = SubResource("ProceduralSkyMaterial_bw3m6")
+
+[sub_resource type="Environment" id="Environment_bhu08"]
+background_mode = 2
+sky = SubResource("Sky_6614m")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_6nngp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bw3m6"]
+size = Vector3(3.202, 2.21, 3.471)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6614m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw3m6"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="MainLevel" type="Node3D" unique_id=1744638012]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=586552463]
+environment = SubResource("Environment_bhu08")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1631164913]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=238131976 groups=["item"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.124394, 1.0596097, 0)
+mesh = SubResource("BoxMesh_6nngp")
+script = ExtResource("1_bhu08")
+item_data = ExtResource("2_05as6")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=1448472497]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=861740078]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0154418945, 0, -0.11651611)
+shape = SubResource("BoxShape3D_bw3m6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1431654336]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=693453456]
+shape = SubResource("BoxShape3D_6614m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1607150099 groups=["item"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.124394, 1.0596097, 3.6828144)
+mesh = SubResource("BoxMesh_6nngp")
+script = ExtResource("1_bhu08")
+item_data = ExtResource("2_05as6")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D2" unique_id=1665531830]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/Area3D" unique_id=239926646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0154418945, 0, -0.11651611)
+shape = SubResource("BoxShape3D_bw3m6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=1029502060]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=221451621]
+shape = SubResource("BoxShape3D_6614m")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1063962158]
+transform = Transform3D(1, 0, 0, 0, 0.07305437, 0, 0, 0, 1, 0, 0, 0)
+use_collision = true
+size = Vector3(100, 0.002, 100)
+material = SubResource("StandardMaterial3D_bw3m6")
+
+[node name="player" parent="." unique_id=226575813 instance=ExtResource("1_bw3m6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.6742835, -1)
+
+[node name="enemy" parent="." unique_id=1524816315 instance=ExtResource("4_05as6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6969414, 1.8969955, -6.169351)
+
+[connection signal="body_entered" from="MeshInstance3D/Area3D" to="player" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="MeshInstance3D/Area3D" to="player" method="_on_area_3d_body_exited"]
+[connection signal="mouse_entered" from="MeshInstance3D/Area3D" to="player" method="_on_area_3d_mouse_entered"]
+[connection signal="body_entered" from="MeshInstance3D2/Area3D" to="player" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="MeshInstance3D2/Area3D" to="player" method="_on_area_3d_body_exited"]
+[connection signal="mouse_entered" from="MeshInstance3D2/Area3D" to="player" method="_on_area_3d_mouse_entered"]
